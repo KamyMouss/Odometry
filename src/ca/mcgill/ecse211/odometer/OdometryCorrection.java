@@ -31,12 +31,12 @@ public class OdometryCorrection implements Runnable {
     while (true) {
       correctionStart = System.currentTimeMillis();
 
-      // TODO Trigger correction (When do I have information to correct?)
-      // TODO Calculate new (accurate) robot position
+      // TODO Trigger correction (When do I have information to correct?) (at line crossing)
+      // TODO Calculate new (accurate) robot position 
 
       // TODO Update odometer with new calculated (and more accurate) vales
 
-      odometer.setXYT(0.3, 19.23, 5.0);
+      odometer.setXYT(0,0,0);
 
       // this ensure the odometry correction occurs only once every period
       correctionEnd = System.currentTimeMillis();

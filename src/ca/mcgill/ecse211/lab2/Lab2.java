@@ -6,25 +6,35 @@ import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.SensorModes;
+import lejos.robotics.SampleProvider;
 
 public class Lab2 {
 
   // Motor Objects, and Robot related parameters
+  private static final Port portColor = LocalEV3.get().getPort("S1");
   private static final EV3LargeRegulatedMotor leftMotor =
       new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
   private static final EV3LargeRegulatedMotor rightMotor =
       new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
   private static final TextLCD lcd = LocalEV3.get().getTextLCD();
   public static final double WHEEL_RAD = 2.2;
-  public static final double TRACK = 17.0;
+  public static final double TRACK = 12.4;
 
   public static void main(String[] args) throws OdometerExceptions {
 
     int buttonChoice;
+    // Setting up the color sensor
+    @SuppressWarnings("resource")
+    SensorModes myColor = new EV3ColorSensor(portColor);
+    SampleProvider myColorSample = myColor.getMode("Red"); 
+    float[] sampleColor = new float[myColor.sampleSize()];
 
     // Odometer related objects
-    Odometer odometer = Odometer.getOdometer(leftMotor, rightMotor, TRACK, WHEEL_RAD); // TODO Complete implementation
-    OdometryCorrection odometryCorrection = new OdometryCorrection(); // TODO Complete
+    Odometer odometer = Odometer.getOdometer(leftMotor, rightMotor, TRACK, WHEEL_RAD); // Complete imlpementation
+    OdometryCorrection odometryCorrection = new OdometryCorrection(); // Complete
                                                                       // implementation
     Display odometryDisplay = new Display(lcd); // No need to change
 
@@ -45,6 +55,8 @@ public class Lab2 {
 
     if (buttonChoice == Button.ID_LEFT) {
       // Float the motors
+      leftMotor.setSpeed(20);
+      rightMotor.setSpeed(20);
       leftMotor.forward();
       leftMotor.flt();
       rightMotor.forward();

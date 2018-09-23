@@ -27,6 +27,19 @@ public class Odometer extends OdometerData implements Runnable {
   private final double WHEEL_RAD;
 
   private double[] position;
+  
+  public static int lastTachoL;
+  public static int lastTachoR;
+  public static int nowTachoL;
+  public static int nowTachoR;
+  public static double distL;
+  public static double distR;
+  public static double deltaD;
+  public static double deltaT;
+  public static double dX;
+  public static double dY;
+  public static double Theta;
+  
 
 
   private static final long ODOMETER_PERIOD = 25; // odometer update period in ms
@@ -102,13 +115,22 @@ public class Odometer extends OdometerData implements Runnable {
     while (true) {
       updateStart = System.currentTimeMillis();
 
-      leftMotorTachoCount = leftMotor.getTachoCount();
-      rightMotorTachoCount = rightMotor.getTachoCount();
-
-      // TODO Calculate new robot position based on tachometer counts
+      nowTachoL = leftMotor.getTachoCount();
+      nowTachoR = rightMotor.getTachoCount();
       
-      // TODO Update odometer values with new calculated values
-      odo.update(0.5, 1.8, 20.1);
+      //Calculate new robot position based on tachometer counts
+      distL = 3.14159*WHEEL_RAD*(nowTachoL-leftMotorTachoCount)/180;     // compute wheel 
+      distR = 3.14159*WHEEL_RAD*(nowTachoR-rightMotorTachoCount)/180;   // displacements
+      leftMotorTachoCount=nowTachoL;           // save tacho counts for next iteration 
+      rightMotorTachoCount=nowTachoR;
+      deltaD = 0.5*(distL+distR);          // compute vehicle displacement 
+      deltaT = (distL-distR)/TRACK * 57.2958;        // compute change in heading
+      Theta += deltaT;
+      dX = deltaD * Math.sin(Theta/57.2958);       // compute X component of displacement
+      dY = deltaD * Math.cos(Theta/57.2958);       // compute Y component of displacement
+      
+      //Update odometer values with new calculated values
+      odo.update(dX, dY, deltaT);
 
       // this ensures that the odometer only runs once every period
       updateEnd = System.currentTimeMillis();
