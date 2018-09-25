@@ -20,7 +20,7 @@ public class Lab2 {
       new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
   private static final TextLCD lcd = LocalEV3.get().getTextLCD();
   public static final double WHEEL_RAD = 2.2;
-  public static final double TRACK = 12.03;
+  public static final double TRACK = 12.075 ;
 
   public static void main(String[] args) throws OdometerExceptions {
 

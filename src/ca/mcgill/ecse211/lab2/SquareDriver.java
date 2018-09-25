@@ -9,7 +9,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  * This class is used to drive the robot on the demo floor.
  */
 public class SquareDriver {
-  private static final int FORWARD_SPEED = 200;
+  private static final int FORWARD_SPEED = 185;
   private static final int ROTATE_SPEED = 150;
   private static final double TILE_SIZE = 30.48;
 

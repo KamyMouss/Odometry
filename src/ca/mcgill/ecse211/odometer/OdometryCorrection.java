@@ -13,6 +13,7 @@ import lejos.hardware.port.Port;
 public class OdometryCorrection implements Runnable {
   private static final long CORRECTION_PERIOD = 10;
   private Odometer odometer;
+  private static final double TILE_SIZE = 30.48;
   //colour sensor variables
   private SensorModes myColor;
   private SampleProvider myColorSample;
@@ -77,10 +78,10 @@ public class OdometryCorrection implements Runnable {
 	    				  odometer.setY(0.0);
 	    			  }
 	    			  else if(numLines == 2) {
-	    				  odometer.setY(30.48);
+	    				  odometer.setY(TILE_SIZE);
 	    			  }
 	    			  else if(numLines == 3) {
-	    				  odometer.setY((2*30.48));
+	    				  odometer.setY(2*TILE_SIZE);
 	    				  numLines = 0;
 	    				  vertical = false;
 	    			  }
@@ -89,10 +90,10 @@ public class OdometryCorrection implements Runnable {
 	    		  else {
 	    			  //correct at each line based on tile size
 	    			  if(numLines == 1) {
-	    				  odometer.setY((2*30.48));
+	    				  odometer.setY(2*TILE_SIZE);
 	    			  }
 	    			  else if(numLines == 2) {
-	    				  odometer.setY(30.48);
+	    				  odometer.setY(TILE_SIZE);
 	    			  }
 	    			  else if(numLines == 3) {
 	    				  odometer.setY(0.0);
@@ -110,10 +111,10 @@ public class OdometryCorrection implements Runnable {
 	    				  odometer.setX(0.0);
 	    			  }
 	    			  else if (numLines == 2) {
-	    				  odometer.setX(30.48);
+	    				  odometer.setX(TILE_SIZE);
 	    			  }
 	    			  else if (numLines == 3) {
-	    				  odometer.setX((2*30.48));
+	    				  odometer.setX(2*TILE_SIZE);
 	    				  numLines = 0;
 	    				  vertical = true;
 	    				  positive = false;
@@ -123,10 +124,10 @@ public class OdometryCorrection implements Runnable {
 	    		  else {
 	    			  //correct at each line based on tile size
 	    			  if(numLines == 1) {
-	    				  odometer.setX((2*30.48));
+	    				  odometer.setX(2*TILE_SIZE);
 	    			  }
 	    			  else if(numLines == 2) {
-	    				  odometer.setX(30.48);
+	    				  odometer.setX(TILE_SIZE);
 	    			  }
 	    			  else if(numLines == 3) {
 	    				  odometer.setX(0.0);
